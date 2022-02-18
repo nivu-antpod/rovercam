@@ -1,14 +1,21 @@
 import cv2
 import sys
 
+width = 1024
+height = 768
+
 capture0 = cv2.VideoCapture('/dev/video0')
 capture1 = cv2.VideoCapture('/dev/video1')
+capture0.set(cv2.CAP_PROP_FPS, 25)
+capture1.set(cv2.CAP_PROP_FPS, 25)
 
+capture0.set(cv2.CAP_PROP_FRAME_WIDTH, width )
+capture0.set(cv2.CAP_PROP_FRAME_HEIGHT, height )
 
 fps = capture0.get(cv2.CAP_PROP_FPS)
 print(fps)
 
-w = capture0.get(cv2.CAP_PROP_FRAME_WIDTH)  
+w  = capture0.get(cv2.CAP_PROP_FRAME_WIDTH)   # float `width`
 h = capture0.get(cv2.CAP_PROP_FRAME_HEIGHT)
 print(w,h)
 
@@ -21,7 +28,7 @@ if sys.argv[1]:
     filename0 = str(sys.argv[1]) + '-0.avi'
     filename1 = str(sys.argv[1]) + '-1.avi'
 
-videoWriter = cv2.VideoWriter(filename0, fourcc, 25.0, (640, 480))
+videoWriter = cv2.VideoWriter(filename0, fourcc, fps, (width, height))
 videoWriter1 = cv2.VideoWriter(filename1, fourcc, 25.0, (640, 480))
 
 while (True):

@@ -3,8 +3,8 @@ import sys
 
 capture0 = cv2.VideoCapture(0)
 capture1 = cv2.VideoCapture(1)
-capture0.set(cv2.CAP_PROP_FPS, 9)
-capture1.set(cv2.CAP_PROP_FPS, 9)
+# capture0.set(cv2.CAP_PROP_FPS, 9)
+# capture1.set(cv2.CAP_PROP_FPS, 9)
 
 
 fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
@@ -26,9 +26,9 @@ while (True):
      
     if ret:
         cv2.imshow('right', frame)
-        cv2.imshow('left', frame)
+        cv2.imshow('left', frame1)
         videoWriter.write(frame)
-        videoWriter1.write(frame)
+        videoWriter1.write(frame1)
  
     if cv2.waitKey(1) == 27:
         break

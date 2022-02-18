@@ -2,12 +2,12 @@ import paho.mqtt.client as mqtt
 import csv
 import json
 from datetime import datetime
-
-
+import sys
 
 now = datetime.now()
 dt_string = now.strftime("%d-%m-%Y-%H-%M-%S")
 
+ip = sys.argv[1]
 
 data_file = open('data_file' + str(dt_string) + '.csv', 'w')
 csv_writer = csv.writer(data_file)
@@ -22,8 +22,8 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
-    data = json.loads(str(msg.payload))
+    print(msg.topic+" "+str(msg.payload.decode("utf-8")))
+    data = json.loads(str(msg.payload.decode("utf-8")))
     sen_data = data['d']
     global count
     if count == 0:
@@ -36,7 +36,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("192.168.43.125", 1883, 60)
+client.connect(str(ip), 1883, 60)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
